@@ -449,6 +449,7 @@ GameObject:
   - component: {fileID: 47001399}
   - component: {fileID: 47001401}
   - component: {fileID: 47001400}
+  - component: {fileID: 47001402}
   m_Layer: 0
   m_Name: Shape001 (1)
   m_TagString: Untagged
@@ -465,7 +466,7 @@ Transform:
   m_GameObject: {fileID: 47001398}
   serializedVersion: 2
   m_LocalRotation: {x: -0.75901425, y: 0.018512145, z: 0.008472648, w: 0.65075564}
-  m_LocalPosition: {x: 24.48, y: -0.87, z: -10.52}
+  m_LocalPosition: {x: 24.76, y: 1.01, z: -18.82}
   m_LocalScale: {x: 0.09999998, y: 0.100000024, z: 0.10000004}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -524,6 +525,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 47001398}
   m_Mesh: {fileID: -9134618851414624062, guid: 0998a9d3e72f2504e9418bf70d54fb81, type: 3}
+--- !u!114 &47001402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47001398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83deb9eff9f28fe4696df45609169b98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: ce99575e8b24ddb43bd3e9fc00f6b492, type: 3}
+  prefab: {fileID: 47001398}
 --- !u!1 &51519843
 GameObject:
   m_ObjectHideFlags: 0
@@ -11855,6 +11870,7 @@ GameObject:
   - component: {fileID: 1337666625}
   - component: {fileID: 1337666627}
   - component: {fileID: 1337666626}
+  - component: {fileID: 1337666628}
   m_Layer: 0
   m_Name: SM_ToyCube_01a (1)
   m_TagString: Untagged
@@ -11871,7 +11887,7 @@ Transform:
   m_GameObject: {fileID: 1337666624}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071069, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -5.956, y: -0.935, z: 7.62}
+  m_LocalPosition: {x: -5.001, y: -0.3990004, z: 9.794999}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11930,6 +11946,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1337666624}
   m_Mesh: {fileID: -2755777413554898346, guid: cecfcaf25100f144d9209657f455ffab, type: 3}
+--- !u!114 &1337666628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337666624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83deb9eff9f28fe4696df45609169b98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: c8605b4bad65e0b47939d3881fd05f71, type: 3}
+  prefab: {fileID: 1337666624}
 --- !u!1 &1340140907
 GameObject:
   m_ObjectHideFlags: 0
@@ -17227,6 +17257,7 @@ GameObject:
   - component: {fileID: 2003571311}
   - component: {fileID: 2003571313}
   - component: {fileID: 2003571312}
+  - component: {fileID: 2003571314}
   m_Layer: 0
   m_Name: SM_ToyRobot (1)
   m_TagString: Untagged
@@ -17243,7 +17274,7 @@ Transform:
   m_GameObject: {fileID: 2003571310}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5734666, y: 0.41368607, z: 0.41368616, w: 0.5734664}
-  m_LocalPosition: {x: -5.746, y: -0.902, z: 7.98}
+  m_LocalPosition: {x: -4.791, y: -0.366, z: 10.155}
   m_LocalScale: {x: 60, y: 60, z: 60}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17302,6 +17333,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2003571310}
   m_Mesh: {fileID: -2992138648186165793, guid: cecfcaf25100f144d9209657f455ffab, type: 3}
+--- !u!114 &2003571314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003571310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83deb9eff9f28fe4696df45609169b98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: a6097dc32277db542aeb75f72010ae00, type: 3}
+  prefab: {fileID: 2003571310}
 --- !u!1001 &2007495653
 PrefabInstance:
   m_ObjectHideFlags: 0
