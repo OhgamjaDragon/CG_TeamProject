@@ -107,19 +107,19 @@ public class CollectItem : MonoBehaviour
         }
     }
 
-    void UseItem(int index)
-    {
-        GameObject item = inventory.GetItem(index);
-        if (item != null)
-        {
-            Debug.Log($"[사용] {index + 1}번 슬롯의 아이템 '{item.name}'을 사용합니다.");
-            // TODO: 실제 사용 로직 여기에 추가
-        }
-        // else
-        // {
-        //     Debug.Log($"[사용 실패] {index + 1}번 슬롯이 비어있습니다.");
-        // }
-    }
+    // void UseItem(int index)
+    // {
+    //     GameObject item = inventory.GetItem(index);
+    //     if (item != null)
+    //     {
+    //         Debug.Log($"[사용] {index + 1}번 슬롯의 아이템 '{item.name}'을 사용합니다.");
+    //         // TODO: 실제 사용 로직 여기에 추가
+    //     }
+    //     // else
+    //     // {
+    //     //     Debug.Log($"[사용 실패] {index + 1}번 슬롯이 비어있습니다.");
+    //     // }
+    // }
 
     void TryPickupItem()
     {
@@ -165,6 +165,20 @@ public class CollectItem : MonoBehaviour
 
                     inventoryUI.AddItemToUI(data.icon);
                     selectedSlot = index; // 자동 선택
+
+                    if (target.name == "SM_ToyCube_01a (1)")
+                    {
+                        ShowToast("9");
+                    }
+                    if (target.name == "SM_ToyRobot (1)")
+                    {
+                        ShowToast("2");
+                    }
+                    if (target.name == "Shape001 (1)")
+                    {
+                        ShowToast("8");
+                    }
+
                     Debug.Log($"[인벤토리] {index + 1}번 슬롯에 {target.name} 저장됨");
                 }
 
