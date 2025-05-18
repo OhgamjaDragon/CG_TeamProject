@@ -124,7 +124,7 @@ public class CollectItem : MonoBehaviour
     void TryPickupItem()
     {
         Transform player = this.transform;
-        Vector3 eyePosition = player.position + Vector3.up * 1.5f;
+        Vector3 eyePosition = player.position + Vector3.up * 0.5f;
         Vector3 viewDirection = player.forward;
 
         Ray ray = new Ray(eyePosition, viewDirection);
