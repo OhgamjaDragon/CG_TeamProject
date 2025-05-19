@@ -123,22 +123,31 @@ public class CollectItem : MonoBehaviour
 
     void TryPickupItem()
     {
-        Transform player = this.transform;
-        Vector3 eyePosition = player.position + Vector3.up * 1.5f;
-        Vector3 viewDirection = player.forward;
+        Vector3 eyePosition = Camera.main.transform.position;
+        Vector3 viewDirection = Camera.main.transform.forward;
+        Vector3 sphereCenter = eyePosition + viewDirection * pickupRange * 0.5f;
 
-        Ray ray = new Ray(eyePosition, viewDirection);
-        Debug.DrawRay(ray.origin, ray.direction * pickupRange, Color.green, 1.0f);
+        Collider[] hits = Physics.OverlapSphere(sphereCenter, sphereRadius, itemLayer);
 
-        RaycastHit hit;
-        if (Physics.SphereCast(ray, sphereRadius, out hit, pickupRange, itemLayer))
+        if (hits.Length > 0)
         {
-            GameObject target = hit.collider.gameObject;
+            GameObject target = hits[0].gameObject;
 
-            Vector3 directionToItem = (target.transform.position - eyePosition).normalized;
-            float angleToItem = Vector3.Angle(viewDirection, directionToItem);
+            // 시야 중심 방향과 가장 일치하는 오브젝트 선택
+            float bestAngle = Vector3.Angle(viewDirection, (target.transform.position - eyePosition).normalized);
 
-            if (angleToItem <= pickupAngle)
+            foreach (var col in hits)
+            {
+                Vector3 dir = (col.transform.position - eyePosition).normalized;
+                float angle = Vector3.Angle(viewDirection, dir);
+                if (angle < bestAngle)
+                {
+                    bestAngle = angle;
+                    target = col.gameObject;
+                }
+            }
+
+            if (bestAngle <= pickupAngle)
             {
                 float itemDistance = Vector3.Distance(eyePosition, target.transform.position);
                 float t = Mathf.Clamp01(itemDistance / pickupRange);
@@ -158,23 +167,24 @@ public class CollectItem : MonoBehaviour
 
                     if (index == -1)
                     {
-                        Destroy(clone); // 메모리 정리
+                        Destroy(clone);
                         ShowToast("아이템이 꽉 찼습니다!");
                         return;
                     }
 
                     inventoryUI.AddItemToUI(data.icon);
-                    selectedSlot = index; // 자동 선택
+                    selectedSlot = index;
 
+                    // 아이템 이름에 따라 메시지 출력
                     if (target.name == "SM_ToyCube_01a (1)")
                     {
                         ShowToast("9");
                     }
-                    if (target.name == "SM_ToyRobot (1)")
+                    else if (target.name == "SM_ToyRobot (1)")
                     {
                         ShowToast("2");
                     }
-                    if (target.name == "Shape001 (1)")
+                    else if (target.name == "Shape001 (1)")
                     {
                         ShowToast("8");
                     }
@@ -189,24 +199,27 @@ public class CollectItem : MonoBehaviour
         }
     }
 
-
     void ShowPickupPrompt()
     {
-        Transform player = this.transform;
-        Ray ray = new Ray(player.position + Vector3.up * 1.2f, player.forward);
+        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f));
         Debug.DrawRay(ray.origin, ray.direction * pickupRange, Color.red);
 
         RaycastHit hit;
         if (Physics.SphereCast(ray, sphereRadius, out hit, pickupRange, itemLayer))
         {
-            // Debug.Log("맞은 물체: " + hit.collider.name);
-
+            // Debug.Log("SphereCast hit: " + hit.collider.name);
             if (hit.collider.CompareTag("Item"))
             {
-                currentItem = hit.collider.gameObject;
-                pickupText.text = $"Press 'E' to pick up \"{currentItem.name}\"";
-                pickupText.gameObject.SetActive(true);
-                return;
+                float distance = Vector3.Distance(Camera.main.transform.position, hit.collider.transform.position);
+
+                if (distance <= pickupRange)
+                {
+                    currentItem = hit.collider.gameObject;
+                    pickupText.text = $"Press 'E' to pick up \"{currentItem.name}\"";
+                    // Debug.Log("메시지 표시됨: " + pickupText.text);
+                    pickupText.gameObject.SetActive(true);
+                    return;
+                }
             }
         }
 
