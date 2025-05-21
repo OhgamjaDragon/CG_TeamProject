@@ -16,6 +16,7 @@ public class CollectItem : MonoBehaviour
 
     public LayerMask itemLayer;
     public string itemLayerName = "Item";
+    public TextMeshProUGUI toastText;
 
     public TextMeshProUGUI pickupText;
     public InventoryUIController inventoryUI;  // UI 연동용
@@ -174,27 +175,25 @@ public class CollectItem : MonoBehaviour
 
                     inventoryUI.AddItemToUI(data.icon);
                     selectedSlot = index;
+                    string itemName = target.name;
 
-                    // 아이템 이름에 따라 메시지 출력
-                    if (target.name == "SM_ToyCube_01a (1)")
+                    if (itemName.Contains("SM_ToyCube_01a"))
                     {
                         ShowToast("9");
                     }
-                    else if (target.name == "SM_ToyRobot (1)")
+                    else if (itemName.Contains("SM_ToyRobot"))
                     {
                         ShowToast("2");
                     }
-                    else if (target.name == "Shape001 (1)")
+                    else if (itemName.Contains("Shape001"))
                     {
                         ShowToast("8");
                     }
-
                     Debug.Log($"[인벤토리] {index + 1}번 슬롯에 {target.name} 저장됨");
                 }
 
                 Destroy(target);
                 currentItem = null;
-                pickupText.gameObject.SetActive(false);
             }
         }
     }
@@ -229,15 +228,14 @@ public class CollectItem : MonoBehaviour
 
     void ShowToast(string message)
     {
-        pickupText.text = message;
-        pickupText.gameObject.SetActive(true);
-        CancelInvoke(nameof(HideToast)); // 중복 방지
-        Invoke(nameof(HideToast), 1.5f); // 1.5초 뒤 숨기기
+        toastText.text = message;
+        toastText.gameObject.SetActive(true);
+        CancelInvoke(nameof(HideToast));
+        Invoke(nameof(HideToast), 1.5f);
     }
 
     void HideToast()
     {
-        pickupText.gameObject.SetActive(false);
+        toastText.gameObject.SetActive(false);
     }
-
 }
