@@ -6,6 +6,7 @@
 [Bb]uilds/
 [Ll]ogs/
 [Mm]emoryCaptures/
+[Uu]serSettings/
 sysinfo.txt
 
 # IDE files
@@ -15,6 +16,7 @@ sysinfo.txt
 *.tmp
 *.user
 *.userprefs
+.vsconfig
 
 # OS-specific
 .DS_Store
