@@ -16,6 +16,7 @@ sysinfo.txt
 *.tmp
 *.user
 *.userprefs
+*.htm
 .vsconfig
 .vs/
 
