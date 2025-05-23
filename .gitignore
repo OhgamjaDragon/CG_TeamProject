@@ -17,6 +17,7 @@ sysinfo.txt
 *.user
 *.userprefs
 .vsconfig
+.vs/
 
 # OS-specific
 .DS_Store
