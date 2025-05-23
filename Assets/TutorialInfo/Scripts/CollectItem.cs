@@ -33,7 +33,11 @@ public class CollectItem : MonoBehaviour
     {
         ShowPickupPrompt();
 
-        if (Input.GetKeyDown(KeyCode.E)) TryPickupItem();
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            // Debug.Log("[CollectItem] E키 눌림");
+            TryPickupItem();
+        }
         if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1)) selectedSlot = 0;
         if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2)) selectedSlot = 1;
         if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3)) selectedSlot = 2;
@@ -164,15 +168,18 @@ public class CollectItem : MonoBehaviour
                 ItemData data = target.GetComponent<ItemData>();
                 if (data != null && data.icon != null)
                 {
+                    Debug.Log($"[CollectItem] ItemData 감지됨. 아이콘: {data.icon.name}");
+
                     int index = inventory.AddItem(clone);
 
                     if (index == -1)
                     {
+                        Debug.LogWarning("[CollectItem] 인벤토리가 가득 참 - 아이템 추가 실패");
                         Destroy(clone);
                         ShowToast("아이템이 꽉 찼습니다!");
                         return;
                     }
-
+                    Debug.Log($"[CollectItem] 인벤토리 슬롯 {index}에 아이템 추가 성공");
                     inventoryUI.AddItemToUI(data.icon);
                     selectedSlot = index;
                     string itemName = target.name;
