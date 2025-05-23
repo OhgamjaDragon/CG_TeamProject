@@ -69,10 +69,21 @@ public class PlayerInteraction : MonoBehaviour
                         {
                             door.ToggleDoor();
                             Debug.Log("문 상태 토글!");
+                            return;
                         }
-                        else
-                        {
-                            Debug.LogError("Door를 찾을 수 없습니다!");
+
+                        // 여기 npc
+                        QuestionNpc questionNpc = hit.collider.GetComponent<QuestionNpc>();
+                        if (questionNpc != null) {
+                            Debug.Log("문제 주는 npc 감지됨!");
+                            var questionActivator = FindFirstObjectByType<QuestionActivator>();
+
+                            if (questionActivator == null) {
+                                Debug.LogError("QuestionActivator를 찾을 수 없습니다!");
+                                return;
+                            }
+
+                            questionActivator.ShowQuestionUI(questionNpc.GetQuestion());
                             return;
                         }
                     }
@@ -85,6 +96,29 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     Debug.Log("Ray가 아무 오브젝트도 감지하지 못함.");
                 }
+            }
+        }
+        else { // UI 창이 떠 있어서 마우스 클릭이 안 감지될 때
+            if(Input.GetKeyDown(KeyCode.X))
+            {   
+                // 패스워드 UI 창 숨김
+                var passwordUIManager = FindFirstObjectByType<PasswordUIManager>();
+
+                if (passwordUIManager != null)
+                {
+                    passwordUIManager.Hide();
+                    return;
+                }
+
+                // 질문 UI 창 숨김
+                var questionUIManager = FindFirstObjectByType<QuestionUIManager>();
+
+                if (questionUIManager != null)
+                {
+                    questionUIManager.Hide();
+                    return;
+                }
+
             }
         }
     }
