@@ -12848,15 +12848,15 @@ PrefabInstance:
       objectReference: {fileID: 1839731214}
     - target: {fileID: 3374098601767416636, guid: 2eed62093e1df4a42a97ce0f22ad1be4, type: 3}
       propertyPath: runSpeed
-      value: 70
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3374098601767416636, guid: 2eed62093e1df4a42a97ce0f22ad1be4, type: 3}
       propertyPath: jumpForce
-      value: 15
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3374098601767416636, guid: 2eed62093e1df4a42a97ce0f22ad1be4, type: 3}
       propertyPath: walkSpeed
-      value: 35
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3374098601767416636, guid: 2eed62093e1df4a42a97ce0f22ad1be4, type: 3}
       propertyPath: jetPackObject
@@ -12864,11 +12864,11 @@ PrefabInstance:
       objectReference: {fileID: 1713386834}
     - target: {fileID: 4842821565379929126, guid: 2eed62093e1df4a42a97ce0f22ad1be4, type: 3}
       propertyPath: cameraHeightOffset
-      value: 10
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4842821565379929126, guid: 2eed62093e1df4a42a97ce0f22ad1be4, type: 3}
       propertyPath: thirdPersonDistance
-      value: 30
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5568790638593781081, guid: 2eed62093e1df4a42a97ce0f22ad1be4, type: 3}
       propertyPath: m_Name
