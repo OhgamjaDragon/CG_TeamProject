@@ -64,4 +64,11 @@ public class CameraSwitcher : MonoBehaviour
             thirdPersonCam.transform.LookAt(playerBody.position + Vector3.up * cameraHeightOffset);
         }
     }
+
+    // 무중력(4번째) 방에서 사용
+    // 1인칭 카메라이면 true, 아니면 false 반환
+    public bool IsFirstPersonCamera()
+    {
+        return isFirstPerson;
+    }
 }

@@ -53,9 +53,9 @@ public class PasswordUIManager : MonoBehaviour
             {
                 Debug.LogError("PlayerInteraction를 찾을 수 없습니다!");
             }
-            PasswordPanelActivator passwordPanelController
+            PasswordPanelActivator ppa
                     = controller.GetComponent<PasswordPanelActivator>();
-            if (passwordPanelController != null) passwordPanelController.CheckPasswordCleared();
+            if (ppa != null) ppa.CheckPasswordCleared();
             else
             {
                 Debug.LogError("PasswordPanelController를 찾을 수 없습니다!");
@@ -65,6 +65,19 @@ public class PasswordUIManager : MonoBehaviour
         {
             Debug.Log("틀린 비밀번호.");
             inputField.text = "";
+        }
+    }
+
+    public void Hide()
+    {
+        panel.SetActive(false);
+        SetCursorLock(true);
+        PlayerInteraction playerInteraction
+            = firstPersonCam.GetComponent<PlayerInteraction>();
+        if (playerInteraction != null) playerInteraction.ActivateMouseInput();
+        else
+        {
+            Debug.LogError("PlayerInteraction를 찾을 수 없습니다!");
         }
     }
 
