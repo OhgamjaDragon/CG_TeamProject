@@ -10,6 +10,9 @@ public class HeartUIManager : MonoBehaviour
     public int maxHealth = 3;
     public int currentHealth = 3;
 
+    public Transform respawnPosition;
+    public GameObject player;
+
     void Start()
     {
         UpdateHearts();
@@ -19,6 +22,11 @@ public class HeartUIManager : MonoBehaviour
     {
         currentHealth = Mathf.Clamp(currentHealth - damage, 0, maxHealth);
         UpdateHearts();
+
+        if (currentHealth <= 0)
+        {
+            RespawnPlayer();
+        }
     }
 
     public void Heal(int amount)
@@ -35,6 +43,18 @@ public class HeartUIManager : MonoBehaviour
                 hearts[i].sprite = fullHeart;
             else
                 hearts[i].sprite = emptyHeart;
+        }
+    }
+
+    void RespawnPlayer()
+    {
+        if (player != null && respawnPosition != null)
+        {
+            player.transform.position = respawnPosition.position;
+            player.transform.rotation = respawnPosition.rotation;
+
+            currentHealth = maxHealth;
+            UpdateHearts();
         }
     }
 }
