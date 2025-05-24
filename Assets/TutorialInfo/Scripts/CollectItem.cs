@@ -6,12 +6,13 @@ using TMPro;
 
 public class CollectItem : MonoBehaviour
 {
-    public float pickupRange = 5f;
+    public float pickupRange = 10f;
     public float sphereRadius = 0.6f;
     public float pickupAngle = 60f;
     private bool isSwapping = false;
     private int? firstSlot = null;
     private int selectedSlot = -1; // 선택된 슬롯 인덱스 (-1이면 없음)
+    public CameraSwitcher cameraSwitcher; // ← 인스펙터에서 연결 필수
 
 
     public LayerMask itemLayer;
@@ -59,9 +60,24 @@ public class CollectItem : MonoBehaviour
         }
     }
 
+
+    Camera GetActiveCamera()
+    {
+        if (cameraSwitcher == null)
+        {
+            Debug.LogWarning("CameraSwitcher가 연결되지 않았습니다.");
+            return Camera.main;
+        }
+
+        return cameraSwitcher.IsFirstPersonCamera()
+            ? cameraSwitcher.firstPersonCam
+            : cameraSwitcher.thirdPersonCam;
+    }
+
     void UseSelectedItem()
     {
         // Debug.Log($"[사용 시도] 현재 selectedSlot = {selectedSlot}");
+        Camera cam = GetActiveCamera();
 
         if (selectedSlot < 0 || selectedSlot >= inventory.items.Count)
         {
@@ -76,7 +92,7 @@ public class CollectItem : MonoBehaviour
             return;
         }
 
-        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        Ray ray = new Ray(cam.transform.position, cam.transform.forward);
         RaycastHit hit;
 
         Vector3 spawnPos;
@@ -96,7 +112,7 @@ public class CollectItem : MonoBehaviour
         }
 
         // 👇 시야 각도 기반 스케일 계산
-        Vector3 viewDirection = Camera.main.transform.forward;
+        Vector3 viewDirection = cam.transform.forward;
         Vector3 groundNormal = Vector3.up;
         float angle = Vector3.Angle(viewDirection, groundNormal); // 90도: 수평, 180도: 완전 아래
         float t = Mathf.InverseLerp(90f, 180f, angle); // 0~1 정규화
@@ -155,110 +171,74 @@ public class CollectItem : MonoBehaviour
 
     void TryPickupItem()
     {
-        Vector3 eyePosition = Camera.main.transform.position;
-        Vector3 viewDirection = Camera.main.transform.forward;
-        Vector3 sphereCenter = eyePosition + viewDirection * pickupRange * 0.5f;
+        Camera cam = GetActiveCamera();
+        Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f));
+        RaycastHit hit;
 
-        Collider[] hits = Physics.OverlapSphere(sphereCenter, sphereRadius, itemLayer);
-
-        if (hits.Length > 0)
+        // ⬇️ OverlapSphere 대신 Raycast로만 감지
+        if (Physics.Raycast(ray, out hit, pickupRange, itemLayer))
         {
-            GameObject target = hits[0].gameObject;
+            GameObject target = hit.collider.gameObject;
 
-            // 시야 중심 방향과 가장 일치하는 오브젝트 선택
-            float bestAngle = Vector3.Angle(viewDirection, (target.transform.position - eyePosition).normalized);
+            // 1) 각도 검사 (원래대로)
+            Vector3 eyePos = ray.origin;
+            Vector3 dirToTarget = (target.transform.position - eyePos).normalized;
+            float bestAngle = Vector3.Angle(ray.direction, dirToTarget);
+            if (bestAngle > pickupAngle) return;
 
-            foreach (var col in hits)
+            // 2) 스케일 조절 (거리 기반 or 시야각 기반 등)
+            float itemDistance = Vector3.Distance(eyePos, target.transform.position);
+            float t   = Mathf.Clamp01(itemDistance / pickupRange);
+            float scaleFactor = Mathf.Lerp(0.5f, 2.0f, t);
+            target.transform.localScale *= scaleFactor;
+
+            // 3) 인벤토리용 복제 + 저장
+            GameObject clone = Instantiate(target);
+            clone.SetActive(false);
+            clone.name = target.name;
+            clone.tag = "Item";
+            clone.layer = LayerMask.NameToLayer("Item");
+
+            ItemData data = target.GetComponent<ItemData>();
+            if (data != null && data.icon != null)
             {
-                Vector3 dir = (col.transform.position - eyePosition).normalized;
-                float angle = Vector3.Angle(viewDirection, dir);
-                if (angle < bestAngle)
+                int index = inventory.AddItem(clone);
+                if (index == -1)
                 {
-                    bestAngle = angle;
-                    target = col.gameObject;
+                    Destroy(clone);
+                    ShowToast("아이템이 꽉 찼습니다!");
+                    return;
                 }
+                inventoryUI.AddItemToUI(data.icon);
+                selectedSlot = index;
             }
 
-            if (bestAngle <= pickupAngle)
-            {
-                float itemDistance = Vector3.Distance(eyePosition, target.transform.position);
-                float t = Mathf.Clamp01(itemDistance / pickupRange);
-                float scaleFactor = Mathf.Lerp(0.5f, 2.0f, t);
-                target.transform.localScale *= scaleFactor;
-
-                GameObject clone = Instantiate(target);
-                clone.SetActive(false);
-                clone.name = target.name;
-                clone.tag = "Item";
-                clone.layer = LayerMask.NameToLayer("Item");
-
-                ItemData data = target.GetComponent<ItemData>();
-                if (data != null && data.icon != null)
-                {
-                    Debug.Log($"[CollectItem] ItemData 감지됨. 아이콘: {data.icon.name}");
-
-                    int index = inventory.AddItem(clone);
-
-                    if (index == -1)
-                    {
-                        Debug.LogWarning("[CollectItem] 인벤토리가 가득 참 - 아이템 추가 실패");
-                        Destroy(clone);
-                        ShowToast("아이템이 꽉 찼습니다!");
-                        return;
-                    }
-                    Debug.Log($"[CollectItem] 인벤토리 슬롯 {index}에 아이템 추가 성공");
-                    inventoryUI.AddItemToUI(data.icon);
-                    selectedSlot = index;
-                    string itemName = target.name;
-
-                    if (itemName.Contains("SM_ToyCube_01a"))
-                    {
-                        ShowToast("9");
-                    }
-                    else if (itemName.Contains("SM_ToyRobot"))
-                    {
-                        ShowToast("2");
-                    }
-                    else if (itemName.Contains("Shape001"))
-                    {
-                        ShowToast("8");
-                    }
-                    Debug.Log($"[인벤토리] {index + 1}번 슬롯에 {target.name} 저장됨");
-                }
-
-                Destroy(target);
-                currentItem = null;
-            }
+            // 4) 원본 제거
+            Destroy(target);
+            currentItem = null;
         }
     }
 
     void ShowPickupPrompt()
     {
-        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f));
+        Camera cam = GetActiveCamera();
+        Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f));
         Debug.DrawRay(ray.origin, ray.direction * pickupRange, Color.red);
 
-        RaycastHit hit;
-        if (Physics.SphereCast(ray, sphereRadius, out hit, pickupRange, itemLayer))
+        if (Physics.SphereCast(ray, sphereRadius, out var hit, pickupRange, itemLayer)
+            && hit.collider.CompareTag("Item"))
         {
-            // Debug.Log("SphereCast hit: " + hit.collider.name);
-            if (hit.collider.CompareTag("Item"))
-            {
-                float distance = Vector3.Distance(Camera.main.transform.position, hit.collider.transform.position);
-
-                if (distance <= pickupRange)
-                {
-                    currentItem = hit.collider.gameObject;
-                    pickupText.text = $"Press 'E' to pick up \"{currentItem.name}\"";
-                    // Debug.Log("메시지 표시됨: " + pickupText.text);
-                    pickupText.gameObject.SetActive(true);
-                    return;
-                }
-            }
+            currentItem = hit.collider.gameObject;
+            pickupText.text = $"Press 'E' to pick up \"{currentItem.name}\"";
+            pickupText.gameObject.SetActive(true);
         }
-
-        pickupText.gameObject.SetActive(false);
-        currentItem = null;
+        else
+        {
+            pickupText.gameObject.SetActive(false);
+            currentItem = null;
+        }
     }
+
 
     void ShowToast(string message)
     {
