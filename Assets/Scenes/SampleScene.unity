@@ -10331,6 +10331,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7775108345101824721, guid: 19b0802fda11c364390235eb5f8eb8e7, type: 3}
   m_PrefabInstance: {fileID: 1207270720}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1165916703 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5405300095859279379, guid: 3dd764aa071c78c43a9b8d1e1072f2ef, type: 3}
+  m_PrefabInstance: {fileID: 1140967372}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1173207879
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13537,6 +13542,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5568790638593781081, guid: 2eed62093e1df4a42a97ce0f22ad1be4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 828242193}
+    - targetCorrespondingSourceObject: {fileID: 5568790638593781081, guid: 2eed62093e1df4a42a97ce0f22ad1be4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1415182916}
   m_SourcePrefab: {fileID: 100100000, guid: 2eed62093e1df4a42a97ce0f22ad1be4, type: 3}
 --- !u!20 &1415182905 stripped
 Camera:
@@ -13575,6 +13583,19 @@ MonoBehaviour:
   toastText: {fileID: 622358746}
   pickupText: {fileID: 1202888730}
   inventoryUI: {fileID: 499641397}
+--- !u!114 &1415182916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507290432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51acd18ab4818aa469299ec91db7ad57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hintManager: {fileID: 1165916703}
 --- !u!1001 &1416707913
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15001,7 +15022,7 @@ MonoBehaviour:
   respawnPosition: {fileID: 527119021}
   player: {fileID: 507290432}
   timerText: {fileID: 1072679782}
-  currentStage: 0
+  currentStage: 1
 --- !u!4 &1557644654
 Transform:
   m_ObjectHideFlags: 0

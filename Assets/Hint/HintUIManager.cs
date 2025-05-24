@@ -38,18 +38,26 @@ public class HintUIManager : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
-        UpdateRespawnPosition(0);
+        UpdateRespawnPosition(1);
     }
 
     public void UpdateRespawnPosition(int stage)
     {
         currentStage = stage;
         count = 0;
-        hintText.text = "힌트";
+        hintText.text = "";
     }
 
     public void ShowHintText()
     {
+        TimerRespawn tr = respawner.GetComponent<TimerRespawn>();
+
+        if (tr != null) {
+            if (currentStage != tr.currentStage) {
+                UpdateRespawnPosition(tr.currentStage);
+            }
+        }
+
         if (currentStage == 0 || currentStage == 3) {
             print("힌트가 없는 방입니다.");
         }
@@ -90,6 +98,6 @@ public class HintUIManager : MonoBehaviour
 
     public bool IsSuccessWithTwentyPercent()
     {
-        return UnityEngine.Random.value < 0.2f;
+        return UnityEngine.Random.value < 0.9f;
     }
 }

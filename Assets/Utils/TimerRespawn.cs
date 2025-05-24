@@ -6,11 +6,13 @@ public class TimerRespawn : MonoBehaviour
     public float timerDuration = 300f; // ¿¹: 5ºÐ
     private float timer;
 
-    public Transform respawnPosition = null;
+    public Transform respawnPosition;
     public GameObject player;
     public TextMeshProUGUI timerText;
 
-    public int currentStage = 0;
+    //
+    public int currentStage = 1;
+    //
 
     void Start()
     {
