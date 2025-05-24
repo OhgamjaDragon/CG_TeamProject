@@ -44,7 +44,7 @@ public class CollectItem : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0)) UseSelectedItem();
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             isSwapping = true;
             firstSlot = null;

@@ -48,18 +48,5 @@ public class QuestionActivator : MonoBehaviour
     }
 
 
-    public void HideQuestionUI()
-    {
-        QuestionUIManager uIManager = panel.GetComponent<QuestionUIManager>();
-
-        if (uIManager != null)
-        {
-            uIManager.Hide();
-        }
-        else
-        {
-            Debug.LogError("QuestionUIManager를 찾을 수 없습니다!");
-            return;
-        }
-    }
+    
 }

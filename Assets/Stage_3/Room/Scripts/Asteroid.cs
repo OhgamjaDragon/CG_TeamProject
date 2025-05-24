@@ -52,7 +52,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
                 rb.linearVelocity = enterSpeed * normalizedOutVector * bounceLevel;
             }
 
-            if (!recentCollision) {
+            if (recentCollision == false) {
                 HeartUIManager heartUIManager = heartUI.GetComponent<HeartUIManager>();
                 if (heartUIManager != null)
                 {
@@ -63,6 +63,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
                     }
                     heartUIManager.TakeDamage(1);
                 }
+                recentCollision = true;
             }
             
         }
