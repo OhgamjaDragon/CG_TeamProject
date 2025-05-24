@@ -15,7 +15,6 @@ public class PlayerMovement : MonoBehaviour
 
     // ThirdRoom 관련
     public bool canUseKeyInput = true;
-    public Vector3 blackHoleRespawnPosition;
     public Vector3 fixedCurrentSpeed;
     public GameObject jetPackObject;
     private JetPack jetPack;
@@ -178,11 +177,11 @@ public class PlayerMovement : MonoBehaviour
 
 
     // player를 respawnPosition에 리스폰
-    public void RespawnPlayer()
+    /*public void RespawnPlayer()
     {
         gameObject.transform.position = blackHoleRespawnPosition;
         rb.linearVelocity = Vector3.zero;
         NoneGravityRoomStartSettings();
         print("Respawn!");
-    }
+    }*/
 }
