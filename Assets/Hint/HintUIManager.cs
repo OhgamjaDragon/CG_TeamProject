@@ -50,13 +50,15 @@ public class HintUIManager : MonoBehaviour
 
     public void ShowHintText()
     {
-        /*TimerRespawn tr = respawner.GetComponent<TimerRespawn>();
+        TimerRespawn tr = respawner.GetComponent<TimerRespawn>();
 
-        if (tr != null) {
-            if (currentStage != tr.currentStage) {
+        if (tr != null)
+        {
+            if (currentStage != tr.currentStage)
+            {
                 UpdateRespawnPosition(tr.currentStage);
             }
-        }*/
+        }
 
         if (currentStage == 0 || currentStage == 3) {
             print("힌트가 없는 방입니다.");
