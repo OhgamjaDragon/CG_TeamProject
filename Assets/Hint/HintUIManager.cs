@@ -38,7 +38,7 @@ public class HintUIManager : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
-        UpdateRespawnPosition(5);
+        UpdateRespawnPosition(1);
     }
 
     public void UpdateRespawnPosition(int stage)
