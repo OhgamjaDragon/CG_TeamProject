@@ -19,7 +19,7 @@ public class InteractionUI : MonoBehaviour
         // "Interactable" 태그가 붙은 오브젝트만 감지
         if (Physics.Raycast(ray, out hit, interactRange))
         {
-            if (hit.collider.CompareTag("Interactable"))
+            if (hit.collider.CompareTag("Interactable") || hit.collider.CompareTag("Item"))
             {
                 indicatorText.text = "!";
                 return;

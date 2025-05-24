@@ -38,7 +38,7 @@ public class PlayerInteraction : MonoBehaviour
                     Debug.Log("충돌된 오브젝트 이름: " + hit.collider.name);
                     Debug.Log("해당 태그: " + hit.collider.tag);
 
-                    // ✅ 아이템 태그는 상호작용 대상에서 제외
+                    // 아이템 태그는 상호작용 대상에서 제외
                     if (hit.collider.CompareTag("Item"))
                     {
                         Debug.Log("아이템은 상호작용 대상이 아님. 무시합니다.");
@@ -56,7 +56,7 @@ public class PlayerInteraction : MonoBehaviour
 
                             if (passwordActivator == null)
                             {
-                                Debug.LogError("❌ PasswordPanelActivator를 찾을 수 없습니다!");
+                                Debug.LogError("PasswordPanelActivator를 찾을 수 없습니다!");
                                 return;
                             }
 
