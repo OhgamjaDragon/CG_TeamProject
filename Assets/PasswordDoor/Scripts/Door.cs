@@ -4,10 +4,11 @@ public class Door : MonoBehaviour
 {
     public bool isOpen = false;
     public float openAngle = 90f;
-    public float openSpeed = 2f;
+    public float openSpeed = 1f; // 1이면 1초 동안 회전
 
     private Quaternion closedRotation;
     private Quaternion openedRotation;
+    private float t = 0f; // 보간 비율 (0~1)
 
     void Start()
     {
@@ -17,14 +18,15 @@ public class Door : MonoBehaviour
 
     void Update()
     {
-        // 문이 열린 상태면 열린 회전으로 보간
-        if (isOpen)
+        if (isOpen && t < 1f)
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, openedRotation, Time.deltaTime * openSpeed);
+            t += Time.deltaTime * openSpeed;
+            transform.rotation = Quaternion.Slerp(closedRotation, openedRotation, t);
         }
-        else
+        else if (!isOpen && t > 0f)
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, closedRotation, Time.deltaTime * openSpeed);
+            t -= Time.deltaTime * openSpeed;
+            transform.rotation = Quaternion.Slerp(closedRotation, openedRotation, t);
         }
     }
 
