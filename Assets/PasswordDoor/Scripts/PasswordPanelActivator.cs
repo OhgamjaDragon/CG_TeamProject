@@ -33,7 +33,7 @@ public class PasswordPanelActivator : MonoBehaviour
             PlayerInteraction playerInteraction = firstPersonCam.GetComponent<PlayerInteraction>();
             if (playerInteraction != null) {
                 playerInteraction.canUseMouseInput = false; // 비밀번호 입력 시에는 좌클릭 입력 안 받음
-                uIManager.Show(door);
+                uIManager.Show(door, firstPersonCam);
             } else
             {
                 Debug.LogError("PlayerInteraction를 찾을 수 없습니다!");

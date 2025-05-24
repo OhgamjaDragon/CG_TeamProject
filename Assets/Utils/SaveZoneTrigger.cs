@@ -14,7 +14,9 @@ public class SaveZone : MonoBehaviour
 
             if (respawnManager != null)
             {
-                respawnManager.UpdateRespawnPoint(transform);
+                string objectName = gameObject.name;
+                char lastCharacter = objectName[objectName.Length - 1];
+                respawnManager.UpdateRespawnPoint(transform, CharNumChangeIntNum(lastCharacter));
                 Debug.Log("새 리스폰 위치 저장됨!");
             }
             else
@@ -23,5 +25,11 @@ public class SaveZone : MonoBehaviour
             }
         }
 
+    }
+
+    int CharNumChangeIntNum(char lastCharacter)
+    {
+        int num = lastCharacter - '0';
+        return num;
     }
 }

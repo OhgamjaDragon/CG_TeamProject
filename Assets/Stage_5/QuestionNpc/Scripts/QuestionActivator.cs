@@ -33,7 +33,7 @@ public class QuestionActivator : MonoBehaviour
             if (playerInteraction != null)
             {
                 playerInteraction.canUseMouseInput = false; // 비밀번호 입력 시에는 좌클릭 입력 안 받음
-                uIManager.Show(selectedQuestion);
+                uIManager.Show(selectedQuestion, firstPersonCam);
             }
             else
             {
@@ -48,5 +48,18 @@ public class QuestionActivator : MonoBehaviour
     }
 
 
-    
+    public void HideQuestionUI()
+    {
+        QuestionUIManager uIManager = panel.GetComponent<QuestionUIManager>();
+
+        if (uIManager != null)
+        {
+            uIManager.Hide();
+        }
+        else
+        {
+            Debug.LogError("QuestionUIManager를 찾을 수 없습니다!");
+            return;
+        }
+    }
 }

@@ -10,7 +10,7 @@ public class PasswordUIManager : MonoBehaviour
 
     private DoorWithPassword currentDoor;
 
-    public Camera firstPersonCam;
+    private Camera firstPersonCamera;
 
     public GameObject controller;
 
@@ -29,9 +29,10 @@ public class PasswordUIManager : MonoBehaviour
 
     //
 
-    public void Show(DoorWithPassword door)
+    public void Show(DoorWithPassword door, Camera cam)
     {
         SetCursorLock(false);       // 마우스 커서 락 해제
+        firstPersonCamera = cam;
         currentDoor = door;
         inputField.text = "";
         panel.SetActive(true);
@@ -47,7 +48,7 @@ public class PasswordUIManager : MonoBehaviour
             panel.SetActive(false);
             SetCursorLock(true);
             PlayerInteraction playerInteraction 
-                = firstPersonCam.GetComponent<PlayerInteraction>();
+                = firstPersonCamera.GetComponent<PlayerInteraction>();
             if (playerInteraction != null) playerInteraction.ActivateMouseInput();
             else
             {
@@ -73,7 +74,7 @@ public class PasswordUIManager : MonoBehaviour
         panel.SetActive(false);
         SetCursorLock(true);
         PlayerInteraction playerInteraction
-            = firstPersonCam.GetComponent<PlayerInteraction>();
+            = firstPersonCamera.GetComponent<PlayerInteraction>();
         if (playerInteraction != null) playerInteraction.ActivateMouseInput();
         else
         {

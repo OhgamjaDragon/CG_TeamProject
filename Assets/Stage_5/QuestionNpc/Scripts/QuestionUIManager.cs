@@ -9,7 +9,7 @@ public class QuestionUIManager : MonoBehaviour
     int currentQuestion;
     public TextMeshProUGUI questionText;
 
-    public Camera firstPersonCam;
+    private Camera firstPersonCam;
 
     [TextArea(10, 15)]
     string question0 = "나는 태양신 라의 가호 아래 나일 강이 내려다보이는 이곳에서 그대에게 지혜의 시험을 내리겠노라. 나는 이집트의 귀족, 세네프루라고 하네." +
@@ -57,9 +57,10 @@ public class QuestionUIManager : MonoBehaviour
 
     //
 
-    public void Show(int selectedQuestion)
+    public void Show(int selectedQuestion, Camera cam)
     {
         SetCursorLock(false);       // 마우스 커서 락 해제
+        firstPersonCam = cam;
         panel.SetActive(true);
         switch (selectedQuestion) { 
         case 0:

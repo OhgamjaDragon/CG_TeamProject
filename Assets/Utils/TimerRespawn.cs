@@ -66,12 +66,11 @@ public class TimerRespawn : MonoBehaviour
         }
     }
 
-    public void UpdateRespawnPoint(Transform newRespawn)
+    public void UpdateRespawnPoint(Transform newRespawn, int stageNum)
     {
         // 추적자 생성 위치 정하기 위해서 현재 player 스테이지 확인하는 코드
-        if (respawnPosition.position != newRespawn.position) {
-            currentStage++;
-        }
+        currentStage = stageNum;
+        Debug.Log(stageNum + "가 현재 스테이지");
         //
 
         respawnPosition.position = newRespawn.position;
