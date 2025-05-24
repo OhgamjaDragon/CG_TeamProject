@@ -10,10 +10,10 @@ public class StartZone : MonoBehaviour
         if ("Player" == other.tag)
         {
             TimerRespawn timerRespawn = respawner.GetComponent<TimerRespawn>();
+            PlayerMovement pm = other.GetComponent<PlayerMovement>();
 
-            if (timerRespawn != null)
+            if (timerRespawn != null && !pm.canUseKeyInput)
             {
-                PlayerMovement pm = other.GetComponent<PlayerMovement>();
                 if (pm != null)
                 {
                     pm.NoneGravityRoomStartSettings();

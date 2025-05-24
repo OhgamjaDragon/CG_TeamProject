@@ -7,7 +7,7 @@ public class HintUIManager : MonoBehaviour
     {
         { "1. 두 방은 완전히 같지 않아.",
         "\n2. 총 세 개의 다른 점이 있어.",
-        "\n3. 농구공만한 크기를 가졌어."},
+        "\n3. 순서는 나로베."},
         { "1. 왼쪽 벽에 놓인 세 개의 액자를 활용해야 해!",
         "\n2. 액자 앞에 놓인 것은 조명이야.",
         "\n3. 그림자의 위치를 특정 액자로 옮기면 돼!" },
@@ -23,7 +23,7 @@ public class HintUIManager : MonoBehaviour
     };
 
 
-    int currentStage;
+    public int currentStage;
     int count;
 
     public TextMeshProUGUI hintText;
@@ -38,7 +38,7 @@ public class HintUIManager : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
-        UpdateRespawnPosition(1);
+        UpdateRespawnPosition(5);
     }
 
     public void UpdateRespawnPosition(int stage)
@@ -50,13 +50,13 @@ public class HintUIManager : MonoBehaviour
 
     public void ShowHintText()
     {
-        TimerRespawn tr = respawner.GetComponent<TimerRespawn>();
+        /*TimerRespawn tr = respawner.GetComponent<TimerRespawn>();
 
         if (tr != null) {
             if (currentStage != tr.currentStage) {
                 UpdateRespawnPosition(tr.currentStage);
             }
-        }
+        }*/
 
         if (currentStage == 0 || currentStage == 3) {
             print("힌트가 없는 방입니다.");

@@ -12,6 +12,7 @@ public class TimerRespawn : MonoBehaviour
 
     //
     public int currentStage = 1;
+    public GameObject heartUI;
     //
 
     void Start()
@@ -54,6 +55,14 @@ public class TimerRespawn : MonoBehaviour
         {
             player.transform.position = respawnPosition.position;
             player.transform.rotation = respawnPosition.rotation;
+
+            HeartUIManager uIManager = heartUI.GetComponent<HeartUIManager>();
+
+            if (uIManager != null)
+            {
+                uIManager.currentHealth = 3;
+                uIManager.UpdateHearts();
+            }
         }
     }
 
