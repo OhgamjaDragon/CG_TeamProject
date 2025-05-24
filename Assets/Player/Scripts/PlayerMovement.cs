@@ -82,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Item"))
         {
             isGrounded = true;
         }
@@ -90,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Item"))
         {
             isGrounded = false;
         }
