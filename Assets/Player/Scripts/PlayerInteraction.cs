@@ -42,6 +42,7 @@ public class PlayerInteraction : MonoBehaviour
                     if (hit.collider.CompareTag("Item"))
                     {
                         Debug.Log("아이템은 상호작용 대상이 아님. 무시합니다.");
+                        return;
                     }
 
                     if (hit.collider.CompareTag("Interactable"))

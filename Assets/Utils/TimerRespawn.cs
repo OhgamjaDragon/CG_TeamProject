@@ -6,9 +6,11 @@ public class TimerRespawn : MonoBehaviour
     public float timerDuration = 300f; // 예: 5분
     private float timer;
 
-    public Transform respawnPosition;
+    public Transform respawnPosition = null;
     public GameObject player;
     public TextMeshProUGUI timerText;
+
+    public int currentStage = 0;
 
     void Start()
     {
@@ -55,6 +57,12 @@ public class TimerRespawn : MonoBehaviour
 
     public void UpdateRespawnPoint(Transform newRespawn)
     {
+        // 추적자 생성 위치 정하기 위해서 현재 player 스테이지 확인하는 코드
+        if (respawnPosition.position != newRespawn.position) {
+            currentStage++;
+        }
+        //
+
         respawnPosition.position = newRespawn.position;
         respawnPosition.rotation = newRespawn.rotation;
     }

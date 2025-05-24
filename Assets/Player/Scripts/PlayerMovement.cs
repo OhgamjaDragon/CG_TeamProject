@@ -113,11 +113,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void QuitNoneGravityRoom()
     {
-        Timer timer = gameObject.GetComponent<Timer>();
-        if (timer != null)
-        {
-            timer.StartSetting();
-        }
         jetPack = null;
         canUseKeyInput = true;
         rb.useGravity = true;
@@ -140,11 +135,6 @@ public class PlayerMovement : MonoBehaviour
     // 처음 시작할 때, 리스폰할 때 세팅들
     public void NoneGravityRoomStartSettings()
     {
-        Timer timer = gameObject.GetComponent<Timer>();
-        if (timer != null)
-        {
-            timer.StartSetting();
-        }
         canUseKeyInput = true;   // input 사용 가능으로 시작
         rb.useGravity = true;
         jetPack.AddFuel();
