@@ -8,6 +8,8 @@ public class BlackHole : MonoBehaviour
     private GravityArea gravityArea;
     public float mass = 0.5f;
 
+    public GameObject respawner;
+
     private void Start()
     {
         // GravityArea 오브젝트가 연결되었는지 확인
@@ -36,10 +38,21 @@ public class BlackHole : MonoBehaviour
             if (other.tag == "Player")
             {
                 // Player의 Sample 컴포넌트에 리스폰 함수(RespawnPlayer()) 존재
-                PlayerMovement player = other.GetComponent<PlayerMovement>();   
-                if (player != null)
+                TimerRespawn timerRespawn = respawner.GetComponent<TimerRespawn>();
+
+                if (timerRespawn != null)
                 {
-                    player.RespawnPlayer();
+                    Rigidbody rb = other.GetComponent<Rigidbody>();
+                    if (rb != null)
+                    {
+                        rb.linearVelocity = Vector3.zero; // Fix: Set velocity to Vector3.zero instead of assigning an int
+                    }
+                    PlayerMovement pm = other.GetComponent<PlayerMovement>();
+                    if (pm != null)
+                    {
+                        pm.NoneGravityRoomStartSettings();
+                    }
+                    timerRespawn.RespawnPlayer();
                 }
             }
         }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    public float currentTime;
+   /* public float currentTime;
     public float second;
     public float timeOutTimeInFourthRoom = 40f;
 
@@ -51,5 +51,5 @@ public class Timer : MonoBehaviour
     {
         currentTime = 0f;
         second = 1f;
-    }
+    }*/
 }

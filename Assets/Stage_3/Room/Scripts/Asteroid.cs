@@ -7,7 +7,30 @@ public class NewMonoBehaviourScript : MonoBehaviour
 {
     private Vector3 myPosition;
     public float bounceLevel = 1f;
-    
+
+    public GameObject heartUI;
+    private float timer;
+    private bool recentCollision;
+    public float noCollisionTime = 0.3f;
+
+    private void Start()
+    {
+        timer = 0;
+        recentCollision = false;
+    }
+
+    private void Update()
+    {
+        if (recentCollision) {
+            timer += Time.deltaTime;
+
+            if (timer > noCollisionTime)
+            {
+                recentCollision = false;
+                timer = 0;
+            }
+        }
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -25,9 +48,23 @@ public class NewMonoBehaviourScript : MonoBehaviour
 
                 float enterSpeed = enterVector.magnitude;
 
-                print("bomb!");
+                
                 rb.linearVelocity = enterSpeed * normalizedOutVector * bounceLevel;
             }
+
+            if (!recentCollision) {
+                HeartUIManager heartUIManager = heartUI.GetComponent<HeartUIManager>();
+                if (heartUIManager != null)
+                {
+                    if (heartUIManager.currentHealth <= 1)
+                    {
+                        rb.linearVelocity = Vector3.zero;
+                        player.NoneGravityRoomStartSettings();
+                    }
+                    heartUIManager.TakeDamage(1);
+                }
+            }
+            
         }
     }
 

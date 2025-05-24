@@ -48,7 +48,7 @@ public class TimerRespawn : MonoBehaviour
         }
     }
 
-    void RespawnPlayer()
+    public void RespawnPlayer()
     {
         if (player != null && respawnPosition != null)
         {
